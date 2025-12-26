@@ -66,20 +66,11 @@ class AuthService extends ChangeNotifier {
       _isLoading = true;
       notifyListeners();
 
-      final response = await _supabase.auth.signUp(
+      await _supabase.auth.signUp(
         email: email,
         password: password,
-        data: {'full_name': fullName},
+        emailRedirectTo: 'https://magenta-vacherin-fd5593.netlify.app',
       );
-
-      if (response.user != null) {
-        // 프로필 생성
-        await _supabase.from('profiles').insert({
-          'id': response.user!.id,
-          'email': email,
-          'full_name': fullName,
-        });
-      }
 
       return null; // 성공
     } catch (e) {
