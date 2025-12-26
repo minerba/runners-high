@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.directions_run,
                         size: 50,
                         color: Colors.white,
@@ -203,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      Expanded(child: Divider()),
+                      const Expanded(child: Divider()),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
@@ -211,13 +211,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(color: AppColors.textSecondary),
                         ),
                       ),
-                      Expanded(child: Divider()),
+                      const Expanded(child: Divider()),
                     ],
                   ),
                   const SizedBox(height: 16),
                   OutlinedButton.icon(
                     onPressed: authService.isLoading ? null : _signInWithGoogle,
-                    icon: Icon(Icons.g_mobiledata, size: 28),
+                    icon: const Icon(Icons.g_mobiledata, size: 28),
                     label: const Text('Google로 로그인'),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -230,10 +230,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   OutlinedButton.icon(
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('카카오 로그인은 추가 설정이 필요합니다')),
+                        const SnackBar(content: Text('카카오 로그인은 추가 설정이 필요합니다')),
                       );
                     },
-                    icon: Icon(Icons.chat_bubble),
+                    icon: const Icon(Icons.chat_bubble),
                     label: const Text('카카오로 로그인'),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -246,10 +246,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   OutlinedButton.icon(
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('페이스북 로그인은 추가 설정이 필요합니다')),
+                        const SnackBar(content: Text('페이스북 로그인은 추가 설정이 필요합니다')),
                       );
                     },
-                    icon: Icon(Icons.facebook),
+                    icon: const Icon(Icons.facebook),
                     label: const Text('Facebook으로 로그인'),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -258,26 +258,27 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '계정이 없으신가요? ',
-                      style: TextStyle(color: AppColors.textSecondary),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => const SignUpScreen()),
-                        );
-                      },
-                      child: const Text('회원가입'),
-                    ),
-                  ],
-                ),
-              ],
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '계정이 없으신가요? ',
+                        style: TextStyle(color: AppColors.textSecondary),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => const SignUpScreen()),
+                          );
+                        },
+                        child: const Text('회원가입'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
