@@ -7,6 +7,12 @@ echo "🚀 Starting Flutter build for Netlify..."
 FLUTTER_VERSION="${FLUTTER_VERSION:-stable}"
 echo "📦 Using Flutter version: $FLUTTER_VERSION"
 
+# 기존 Flutter SDK 제거 (캐시 문제 방지)
+if [ -d "flutter" ]; then
+  echo "🗑️ Removing existing Flutter SDK..."
+  rm -rf flutter
+fi
+
 # Flutter SDK 다운로드 (shallow clone으로 빠르게)
 echo "⬇️ Downloading Flutter SDK..."
 git clone --depth 1 -b "$FLUTTER_VERSION" https://github.com/flutter/flutter.git flutter
