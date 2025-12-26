@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import '../models/user_model.dart';
 
 class AuthService extends ChangeNotifier {
@@ -122,31 +119,19 @@ class AuthService extends ChangeNotifier {
       _isLoading = true;
       notifyListeners();
 
-      final GoogleSignIn googleSignIn = GoogleSignIn(
-        clientId: 'YOUR_GOOGLE_CLIENT_ID', // Google Cloud Console에서 발급
+      // Supabase OAuth를 사용한 Google 로그인
+      final response = await _supabase.auth.signInWithOAuth(
+        OAuthProvider.google,
+        redirectTo: 'https://magenta-vacherin-fd5593.netlify.app',
       );
 
-      final googleUser = await googleSignIn.signIn();
-      if (googleUser == null) {
+      if (!response) {
         return '로그인이 취소되었습니다';
       }
 
-      final googleAuth = await googleUser.authentication;
-      final accessToken = googleAuth.accessToken;
-      final idToken = googleAuth.idToken;
-
-      if (accessToken == null || idToken == null) {
-        return '인증 토큰을 가져올 수 없습니다';
-      }
-
-      await _supabase.auth.signInWithIdToken(
-        provider: OAuthProvider.google,
-        idToken: idToken,
-        accessToken: accessToken,
-      );
-
       return null; // 성공
     } catch (e) {
+      debugPrint('Google login error: $e');
       return e.toString();
     } finally {
       _isLoading = false;
@@ -154,18 +139,25 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  // 카카오 로그인 (추가 설정 필요)
+  // 카카오 로그인
   Future<String?> signInWithKakao() async {
     try {
       _isLoading = true;
       notifyListeners();
 
-      // 카카오 SDK 사용
-      // kakao_flutter_sdk_user 패키지 사용
-      // 구현 예정
-      
-      return '카카오 로그인은 추가 설정이 필요합니다';
+      // Supabase OAuth를 사용한 Kakao 로그인
+      final response = await _supabase.auth.signInWithOAuth(
+        OAuthProvider.kakao,
+        redirectTo: 'https://magenta-vacherin-fd5593.netlify.app',
+      );
+
+      if (!response) {
+        return '로그인이 취소되었습니다';
+      }
+
+      return null; // 성공
     } catch (e) {
+      debugPrint('Kakao login error: $e');
       return e.toString();
     } finally {
       _isLoading = false;
@@ -179,11 +171,19 @@ class AuthService extends ChangeNotifier {
       _isLoading = true;
       notifyListeners();
 
-      // flutter_facebook_auth 패키지 사용
-      // 구현 예정
-      
-      return '페이스북 로그인은 추가 설정이 필요합니다';
+      // Supabase OAuth를 사용한 Facebook 로그인
+      final response = await _supabase.auth.signInWithOAuth(
+        OAuthProvider.facebook,
+        redirectTo: 'https://magenta-vacherin-fd5593.netlify.app',
+      );
+
+      if (!response) {
+        return '로그인이 취소되었습니다';
+      }
+
+      return null; // 성공
     } catch (e) {
+      debugPrint('Facebook login error: $e');
       return e.toString();
     } finally {
       _isLoading = false;
