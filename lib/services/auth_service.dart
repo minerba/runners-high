@@ -122,7 +122,6 @@ class AuthService extends ChangeNotifier {
       // Supabase OAuth를 사용한 Google 로그인
       final response = await _supabase.auth.signInWithOAuth(
         OAuthProvider.google,
-        redirectTo: 'https://magenta-vacherin-fd5593.netlify.app',
       );
 
       if (!response) {
@@ -148,7 +147,6 @@ class AuthService extends ChangeNotifier {
       // Supabase OAuth를 사용한 Kakao 로그인
       final response = await _supabase.auth.signInWithOAuth(
         OAuthProvider.kakao,
-        redirectTo: 'https://magenta-vacherin-fd5593.netlify.app',
       );
 
       if (!response) {
@@ -174,7 +172,6 @@ class AuthService extends ChangeNotifier {
       // Supabase OAuth를 사용한 Facebook 로그인
       final response = await _supabase.auth.signInWithOAuth(
         OAuthProvider.facebook,
-        redirectTo: 'https://magenta-vacherin-fd5593.netlify.app',
       );
 
       if (!response) {
