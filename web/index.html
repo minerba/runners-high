@@ -112,11 +112,31 @@
     <div class="spinner"></div>
   </div>
   <script>
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        document.getElementById('loading').style.display = 'none';
-      }, 500);
+    // Flutter 앱이 준비되면 로딩 화면 숨기기
+    window.addEventListener('flutter-first-frame', function() {
+      var loading = document.getElementById('loading');
+      if (loading) {
+        loading.style.transition = 'opacity 0.3s';
+        loading.style.opacity = '0';
+        setTimeout(function() {
+          loading.style.display = 'none';
+        }, 300);
+      }
     });
+    
+    // 최대 10초 후에는 강제로 숨기기 (타임아웃)
+    setTimeout(function() {
+      var loading = document.getElementById('loading');
+      if (loading && loading.style.display !== 'none') {
+        console.warn('Flutter app failed to initialize within 10 seconds');
+        loading.innerHTML = '<div style="padding: 20px; text-align: center;">' +
+          '<h2 style="color: #ff5555;">⚠️ 로딩 실패</h2>' +
+          '<p>앱을 불러오는데 실패했습니다.</p>' +
+          '<p>페이지를 새로고침해주세요.</p>' +
+          '<button onclick="location.reload()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">새로고침</button>' +
+          '</div>';
+      }
+    }, 10000);
   </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
