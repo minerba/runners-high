@@ -51,6 +51,28 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> _signInWithKakao() async {
+    final authService = context.read<AuthService>();
+    final error = await authService.signInWithKakao();
+
+    if (error != null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error), backgroundColor: AppColors.error),
+      );
+    }
+  }
+
+  Future<void> _signInWithFacebook() async {
+    final authService = context.read<AuthService>();
+    final error = await authService.signInWithFacebook();
+
+    if (error != null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error), backgroundColor: AppColors.error),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthService>();
@@ -228,11 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 12),
                   OutlinedButton.icon(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('카카오 로그인은 추가 설정이 필요합니다')),
-                      );
-                    },
+                    onPressed: authService.isLoading ? null : _signInWithKakao,
                     icon: const Icon(Icons.chat_bubble),
                     label: const Text('카카오로 로그인'),
                     style: OutlinedButton.styleFrom(
@@ -244,11 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 12),
                   OutlinedButton.icon(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('페이스북 로그인은 추가 설정이 필요합니다')),
-                      );
-                    },
+                    onPressed: authService.isLoading ? null : _signInWithFacebook,
                     icon: const Icon(Icons.facebook),
                     label: const Text('Facebook으로 로그인'),
                     style: OutlinedButton.styleFrom(
