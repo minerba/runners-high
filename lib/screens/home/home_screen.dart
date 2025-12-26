@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Icon(Icons.directions_run, color: AppColors.primary),
             const SizedBox(width: 8),
-            const Text('Runners High'),
+            const Text('달려라 방방'),
           ],
         ),
         actions: [

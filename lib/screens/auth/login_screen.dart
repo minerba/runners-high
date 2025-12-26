@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 32),
                   Text(
-                    'Runners High',
+                    '달려라 방방',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 36,
