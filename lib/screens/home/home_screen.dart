@@ -90,24 +90,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 return;
               }
 
-              final newEvent = EventModel(
-                id: DateTime.now().millisecondsSinceEpoch.toString(),
+              final error = await _eventService.createEvent(
                 title: titleController.text.trim(),
                 description: '',
-                date: DateTime.now(),
-                location: '',
-                registrationUrl: urlController.text.trim(),
-                imageUrl: '',
-                createdAt: DateTime.now(),
+                eventUrl: urlController.text.trim().isEmpty 
+                    ? null 
+                    : urlController.text.trim(),
+                eventDate: DateTime.now(),
               );
 
-              await _eventService.createEvent(newEvent);
               Navigator.pop(context);
-              _loadData();
-              
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('대회 정보가 추가되었습니다')),
-              );
+
+              if (error != null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('오류: $error')),
+                );
+              } else {
+                _loadData();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('대회 정보가 추가되었습니다')),
+                );
+              }
             },
             child: const Text('등록'),
           ),
