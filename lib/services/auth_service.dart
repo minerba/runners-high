@@ -6,28 +6,39 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import '../models/user_model.dart';
 
 class AuthService extends ChangeNotifier {
-  final _supabase = Supabase.instance.client;
+  SupabaseClient get _supabase => Supabase.instance.client;
   UserModel? _currentUser;
   bool _isLoading = false;
 
   UserModel? get currentUser => _currentUser;
   bool get isLoading => _isLoading;
-  bool get isAuthenticated => _supabase.auth.currentUser != null;
+  bool get isAuthenticated {
+    try {
+      return _supabase.auth.currentUser != null;
+    } catch (e) {
+      debugPrint('Auth check error: $e');
+      return false;
+    }
+  }
 
   AuthService() {
     _initAuthListener();
   }
 
   void _initAuthListener() {
-    _supabase.auth.onAuthStateChange.listen((data) {
-      final session = data.session;
-      if (session != null) {
-        _loadUserProfile();
-      } else {
-        _currentUser = null;
-        notifyListeners();
-      }
-    });
+    try {
+      _supabase.auth.onAuthStateChange.listen((data) {
+        final session = data.session;
+        if (session != null) {
+          _loadUserProfile();
+        } else {
+          _currentUser = null;
+          notifyListeners();
+        }
+      });
+    } catch (e) {
+      debugPrint('Auth listener init error: $e');
+    }
   }
 
   Future<void> _loadUserProfile() async {
