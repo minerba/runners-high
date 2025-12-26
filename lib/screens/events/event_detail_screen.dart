@@ -120,12 +120,19 @@ class EventDetailScreen extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton.icon(
                         onPressed: () async {
-                          final uri = Uri.parse(event.eventUrl!);
-                          if (await canLaunchUrl(uri)) {
+                          try {
+                            String url = event.eventUrl!.trim();
+                            
+                            // http:// 또는 https:// 가 없으면 추가
+                            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                              url = 'https://$url';
+                            }
+                            
+                            final uri = Uri.parse(url);
                             await launchUrl(uri, mode: LaunchMode.externalApplication);
-                          } else {
+                          } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('링크를 열 수 없습니다')),
+                              SnackBar(content: Text('링크를 열 수 없습니다: ${e.toString()}')),
                             );
                           }
                         },
