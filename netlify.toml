@@ -1,0 +1,17 @@
+[build]
+  command = "flutter/bin/flutter build web --release"
+  publish = "build/web"
+
+[build.environment]
+  # Flutter 설치 및 환경 설정
+  FLUTTER_VERSION = "3.38.5"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production.environment]
+  # Supabase 환경 변수는 Netlify UI에서 설정해야 합니다
+  # SUPABASE_URL
+  # SUPABASE_ANON_KEY
