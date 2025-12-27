@@ -35,20 +35,25 @@
   <!-- Google Fonts Preload - 폰트 깨짐 현상 방지 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=block" rel="stylesheet">
-  <link rel="preload" href="https://fonts.gstatic.com/s/notosanskr/v36/PbyxFmXiEBPT4ITbgNA5CgmOsn7uwpYcuH8y.woff2" as="font" type="font/woff2" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=optional" rel="stylesheet">
   
   <!-- Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <style>
+    /* 폰트가 로드될 때까지 시스템 폰트 사용 */
     body {
       margin: 0;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', 'Segoe UI', Roboto, sans-serif;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* 폰트 로드 완료 후 적용 */
+    body.fonts-loaded {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', sans-serif;
     }
     #loading {
       position: fixed;
@@ -121,6 +126,13 @@
     <div class="spinner"></div>
   </div>
   <script>
+    // 폰트 로드 감지
+    if (document.fonts) {
+      document.fonts.ready.then(function() {
+        document.body.classList.add('fonts-loaded');
+      });
+    }
+    
     // Flutter 앱이 준비되면 로딩 화면 숨기기
     window.addEventListener('flutter-first-frame', function() {
       var loading = document.getElementById('loading');
