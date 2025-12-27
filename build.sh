@@ -30,8 +30,11 @@ flutter precache --web
 echo "📚 Installing dependencies..."
 flutter pub get
 
-# 웹 빌드 (셰이더 컴파일 오류 우회)
+# 웹 빌드 (성능 최적화)
 echo "🔨 Building for web..."
-flutter build web --release --no-tree-shake-icons
+flutter build web --release \
+  --web-renderer html \
+  --no-tree-shake-icons \
+  --dart-define=FLUTTER_WEB_USE_SKIA=false
 
 echo "✅ Build completed successfully!"
