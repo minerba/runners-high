@@ -69,7 +69,9 @@ class AuthService extends ChangeNotifier {
       await _supabase.auth.signUp(
         email: email,
         password: password,
-        emailRedirectTo: 'https://magenta-vacherin-fd5593.netlify.app',
+        data: {
+          'full_name': fullName ?? email.split('@')[0],
+        },
       );
 
       return null; // 성공
