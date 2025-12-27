@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'config/supabase_config.dart';
 import 'services/auth_service.dart';
 import 'screens/splash_screen.dart';
@@ -78,7 +77,7 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
           ),
           textTheme: GoogleFonts.notoSansTextTheme(),
-          useMaterial3: true,
+          fontFamily: kIsWeb ? '-apple-system' : null
           appBarTheme: const AppBarTheme(
             centerTitle: true,
             elevation: 0,
