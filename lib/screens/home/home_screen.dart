@@ -42,14 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
     
     try {
       // 병렬로 데이터 로드 (성능 2배 향상)
-      final results = await Future.wait([
+      final results = await Future.wait<List<dynamic>>([
         _eventService.getEvents(),
         _productService.getFeaturedProducts(),
       ]);
       
       setState(() {
-        _events = results[0];
-        _featuredProducts = results[1];
+        _events = results[0] as List<EventModel>;
+        _featuredProducts = results[1] as List<ProductModel>;
         _isLoading = false;
         
         // 데이터가 비어있으면 경고 메시지
